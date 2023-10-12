@@ -1,0 +1,43 @@
+version: "3"
+services:
+  php:
+    container_name: Database_And_Exercises_PHP
+    build:
+      context: ./Docker/php
+      dockerfile: Dockerfile
+    stdin_open: true
+    tty: true
+    volumes:
+      - ../src:/var/www/html
+    ports:
+      - 8000:80
+    depends_on:
+      - "mariadb"
+
+  mariadb:
+    container_name: Database_And_Exercises_DB
+    build:
+      context: ./Docker/mariadb
+      dockerfile: Dockerfile
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./Docker/mariadb/mysqld_charset.cnf:/etc/mysql/conf.d/my.cnf
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+
+  postfix:
+    container_name: Database_And_Exercises_Postfix
+    build:
+      context: ./Docker/postfix
+      dockerfile: Dockerfile
+    image: docker-ubuntu-postfix-example-image:latest
+    volumes:
+      # Postfixの設定をマウントする
+      - type: bind
+        source: ./Docker/postfix/config/main.cf
+        target: /etc/postfix/main.cf
+      # SASL認証のパスワードをマウントする
+      - type: bind
+        source: ./Docker/postfix/config/sasl_passwd
+        target: /etc/postfix/sasl_passwd
