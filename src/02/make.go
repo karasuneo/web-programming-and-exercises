@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-    for i := 1; i <= 13; i++ {
+    for i := 10; i <= 14; i++ {
         // ファイル名を作成
         fileName := fmt.Sprintf("sample12-%d.php", i)
 
