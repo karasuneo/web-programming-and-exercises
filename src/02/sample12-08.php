@@ -19,7 +19,7 @@
         }
     }
     ?>
-    いずれかのラジオボタンを選択して&#8203;``oaicite:{"number":1,"invalid_reason":"Malformed citation 【送信】"}``&#8203;ボタンをクリックしてください。
+    いずれかの ラジオボタンを選択して[送信]ボタンをクリックしてください。
     <form action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" method="POST">
         <p><input type="radio" name="inputdata" value="101">101</p>
         <p><input type="radio" name="inputdata" value="201">201</p>

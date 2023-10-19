@@ -23,7 +23,7 @@
         print "<br><br>";
     }
     ?>
-    テキストボックスに値を入力して&#8203;``oaicite:{"number":1,"invalid_reason":"Malformed citation 【送信】"}``&#8203;ボタンをクリックしてください（複数入力可）。
+    テキストボックスに値を入力して[送信]ボタンをクリックしてください (複数入力可)。
     <form action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" method="POST">
         <p><input size="40" type="text" name="inputdata[]"></p>
         <p><input size="40" type="text" name="inputdata[]"></p>

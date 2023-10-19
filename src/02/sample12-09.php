@@ -18,7 +18,7 @@
         print "<br><br><br>";
     }
     ?>
-    配信を希望する場合はチェックを付けて&#8203;``oaicite:{"number":1,"invalid_reason":"Malformed citation 【送信】"}``&#8203;ボタンをクリックしてください。
+    配信を希望する場合はチェックを付けて[送信]ボタンをクリックしてください。
     <form action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" method="POST">
         <input type="checkbox" name="inputdata">メールによる配信を希望します
         <input type="submit" name="btnExec" value="送信">

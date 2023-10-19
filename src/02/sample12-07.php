@@ -18,7 +18,7 @@
         }
     }
     ?>
-    テキストボックスに値を入力して&#8203;``oaicite:{"number":1,"invalid_reason":"Malformed citation 【送信】"}``&#8203;ボタンをクリックしてください.
+    テキストボックスに値を入力して【送信】ボタンをクリックしてください。
     <form action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" method="POST">
         <input size="40" type="text" name="inputdata">
         <input type="submit" name="btnExec" value="送信">

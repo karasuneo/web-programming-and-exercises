@@ -21,7 +21,7 @@
         print "<br><br>";
     }
     ?>
-    開発経験のある言語にチェックを付けて&#8203;``oaicite:{"number":1,"invalid_reason":"Malformed citation 【送信】"}``&#8203;ボタンをクリックしてください（複数選択可）。
+     発経験のある言語にチェックを付けて[送信]ボタンをクリックしてください(複数選択可)。
     <form action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" method="POST">
         <p><input type="checkbox" name="inputdata1">PHP</p>
         <p><input type="checkbox" name="inputdata2">Java</p>
