@@ -6,9 +6,9 @@ import (
 )
 
 func main() {
-    for i := 15; i <= 21; i++ {
+    for i := 1; i <= 9; i++ {
         // ファイル名を作成
-        fileName := fmt.Sprintf("sample12-%d.php", i)
+        fileName := fmt.Sprintf("sample14-0%d.php", i)
 
         // ファイルを作成または既存のファイルを上書き
         file, err := os.Create(fileName)
