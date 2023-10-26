@@ -10,9 +10,10 @@ session_start();
     <title></title>
 </head>
 
-<body> <?php
+<body> 
+    <?php
         print "セッションを開始しました！";
-        ?>
+    ?>
 </body>
 
 </html>

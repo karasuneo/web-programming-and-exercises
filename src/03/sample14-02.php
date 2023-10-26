@@ -13,9 +13,9 @@ session_start();
 <body>
     <?php
     // セッション変数にデータを代入
-    $_SESSION['sesdatal'] = 10;
+    $_SESSION['sesdata1'] = 10;
     $_SESSION['sesdata2'] = "PHP: Hypertext Preprocessor";
-    print "セッションに「" . $_SESSION['sesdatal'] . "」を保存しました<br>";
+    print "セッションに「" . $_SESSION['sesdata1'] . "」を保存しました<br>";
     print "セッションに「" . $_SESSION['sesdata2'] . "」を保存しました<br>";
 
     // セッション変数にデータを代入

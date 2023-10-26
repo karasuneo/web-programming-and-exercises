@@ -1,6 +1,7 @@
 FROM php:7.4-apache
 RUN docker-php-ext-install pdo_mysql
 
+
 # ここからはLaravelの環境を構築できるらしい
 # # どんなdockerイメージを利用して構築をするか
 # FROM php:7.4-apache

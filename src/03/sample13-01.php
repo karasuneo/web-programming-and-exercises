@@ -1,23 +1,25 @@
 <?php
 $data1 = 10;
-$data2 = "PHP: Hypertext Preprocessor";
+$data2 = "PHP:Hypertext Preprocessor";
 
 // データをクッキーに保存
-if (setcookie("mycookiedata", "k_data1=$data1&k_data2=$data2", time() + (3600 * 24 * 7))) {
-    echo "データをクッキーに保存しました！";
-} else {
-    echo "クッキーの保存に失敗しました！";
-}
+if (setcookie("mycookiedata", "ck_data1=$data1&ck_data2=$data2", time() + (3600 * 24 * 7))) {
+    
 ?>
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
-    <meta charset="UTF-8">
-    <title></title>
+<meta charset="UTF-8">
+<title></title>
 </head>
-
 <body>
-</body>
+<?php
+        print "データをクッキーに保存しました！";
+    }
+    else {
+        print "クッキーの保存に失敗しました！";
+    }
+?>
 
+</body>
 </html>

@@ -3,29 +3,28 @@
 $useragent = $_SERVER['HTTP_USER_AGENT'];
 
 // ブラウザの種類によってリダイレクト先を切り替え
-if (strpos($useragent, "Chrome") !== false) {
-    // Chromeの場合
-    header("Location: sample12-34_Cr.htm");
-} elseif (strpos($useragent, "Safari") !== false) {
-    // Safariの場合
-    header("Location: sample12-34_Sf.htm");
-} elseif (strpos($useragent, "Mozilla") !== false) {
-    // FirefoxやMozilla互換ブラウザの場合
-    header("Location: sample12-34_Fr.htm");
+if (strlen(strpos($useragent, "Chrome")) > 0) {
+    // Chrome
+    header("Location: sample12-34_Cr.html");
+} 
+elseif (strlen(strpos($useragent, "Safari")) > 0) {
+    // Safari
+    header("Location: sample12-34_Sf.html");
+} 
+elseif (strlen(strpos($useragent, "Mozilla")) > 0) {
+    // FirefoxやMozilla互換ブラウザ
+    header("Location: sample12-34_Fr.html");
 } else {
-    // その他の環境の場合
+    // その他の環境
     header("Location: index.htm");
 }
 ?>
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
-    <meta charset="UTF-8">
-    <title></title>
+<meta charset="UTF-8">
+<title></title>
 </head>
-
 <body>
 </body>
-
 </html>

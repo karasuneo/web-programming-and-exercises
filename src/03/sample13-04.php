@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-    <meta charset="UTF-8">
-</head>
-
-<body>
     <?php
     if (isset($_POST['btnExec'])) {
         // 送信ボタンがクリックされたとき
@@ -34,10 +26,16 @@
         }
     }
     ?>
-    名前と住所を入力して&#8203;``oaicite:{"number":1,"invalid_reason":"Malformed citation 【送信】"}``&#8203;ボタンをクリックしてください.
-    <form action="<?php echo $_SERVER['SCRIPT_NAME'] ?>" method="POST">
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    名前と住所を入力して[送信]ボタンをクリックしてください.
+    <form action="<?php $_SERVER['SCRIPT_NAME'] ?>" method="POST">
         名前: <input size="40" type="text" name="username" value="<?php echo $name; ?>"><br>
-        住所: <input size="40" type="text" name="useraddress" value="<?php echo $address; ?>"><br>
+        住所: <input size="40" type="text" name="useraddress" value="<?php echo $address?>"><br>
         <input type="submit" name="btnExec" value="送信">
     </form>
 </body>

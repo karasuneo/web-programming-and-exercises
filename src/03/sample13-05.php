@@ -23,17 +23,17 @@ if (isset($_GET['id'])) {
         // データをクッキーに保存
         setcookie("mycart", "ck_id=$id");
         // 追加したデータを表示
-        echo "今回カートに入れた商品IDは，" . $_GET['id'] . "<br><br>";
+        print "今回カートに入れた商品IDは " . $_GET['id'] . "<br><br>";
     }
     // 現在のカート内容を列挙
-    echo "今回カートに入れた商品は" . $_GET['id'] . "<br><br>";
+    print "【現在のカートの状況】<br>";
     if (isset($id)) {
         $idarray = explode(",", $id);
         foreach ($idarray as $data) {
-            echo $data . "<br>";
+            print $data . "<br>";
         }
     }
-    echo "<br><br>";
+    print "<br><br>";
 }
 ?>
 <!DOCTYPE html>

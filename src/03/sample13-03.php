@@ -1,23 +1,20 @@
 <?php
-//クッキーを削除
-setcookie("mycookiedata");
+    //クッキーを削除
+    setcookie ("mycookiedata");
 ?>
-<!DOCTYPE html>
-<html lang="ja">
-
+<!DOCTYPE html> 
+<html lang="ja"> 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"> 
     <title></title>
-</head>
-
-<body> <?php
-        //クッキーを読み込み
-        if (isset($_COOKIE['mycookiedata'])) {
-            //クッキーにデータがないとき
-            print "データはクッキーに保存されていません！";
-        }
-        ?>
-
-    <body>
-
+</head> 
+<body> 
+<?php
+    //クッキーを読み込み
+    if (isset($_COOKIE['mycookiedata'])){
+    //クッキーにデータがないとき
+    print "データはクッキーに保存されていません！";
+    }
+?>
+</body> 
 </html>

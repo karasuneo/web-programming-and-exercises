@@ -1,28 +1,24 @@
+<?php
+// セッションを開始
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <meta charset="UTF-8">
     <title></title>
 </head>
-
 <body>
-    <?php
-    if (isset($_POST['btnExec'])) {
-        // 送信ボタンがクリックされたとき
-        // 受け取ったデータをそのまま表示
-        echo "入力データ（そのまま表示）: " . $_POST['inputdata'] . "<br><br>";
+<?php
+// セッション変数のデータを読み込み
 
-        // 受け取ったデータを半角数字に変換して表示
-        $receivedData = mb_convert_kana($_POST['inputdata'], "n", "UTF-8");
-        echo "入力データ（半角数字に変換）: " . $receivedData . "<br><br>";
-    }
-    ?>
-    テキストボックスに全角数字を入力して［送信］ボタンをクリックしてください.
-    <form action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" method="POST">
-        <input size="40" type="text" name="inputdata">
-        <input type="submit" name="btnExec" value="送信">
-    </form>
+    print $_SESSION['sesdata1'] . "<br>";
+    print $_SESSION['sesdata2'] . "<br>";
+    print $_SESSION['sesdata3'] . "<br>";
+    print $_SESSION['sesdata4'] . "<br>";
+    print $_SESSION['sesdata5'] . "<br>";
+    
+?>
 </body>
-
 </html>
