@@ -1,6 +1,9 @@
 FROM php:7.4-apache
-RUN docker-php-ext-install pdo_mysql
 
+# 設定ファイルをdockerコンテナ内のPHP、Apacheに読み込ませる
+ADD php.ini /usr/local/etc/php/
+RUN docker-php-ext-install pdo_mysql
+# ADD 000-default.conf /etc/apache2/sites-enabled/
 
 # ここからはLaravelの環境を構築できるらしい
 # # どんなdockerイメージを利用して構築をするか
