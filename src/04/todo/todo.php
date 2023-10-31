@@ -30,8 +30,7 @@ $str  = "
 foreach ($file_contents as $line) {
     $line = mb_convert_encoding($line, "UTF-8", "utf-8,sjis"); // UTF-8に変換
     list($todo_date_str, $todo_title) = explode(" ", $line); // タブで区切る
-    echo ($todo_title);
-    
+
     $todo_date = date("Y/m/d", strtotime($todo_date_str));
     // echo ($todo_date_str);
 
