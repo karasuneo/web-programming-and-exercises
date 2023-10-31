@@ -13,7 +13,7 @@ if (isset($_POST["save"])) {
         $error_message[] = "本文を入力してください。";
     }
 
-    if (count($error_message) === 0) {
+    if (!count($error_message)) {
         $title = str_replace("|", "|", $_POST["title"]);
         $name = str_replace("|", "|", $_POST["name"]);
         $body = str_replace("|", "|", $_POST["body"]);
