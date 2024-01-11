@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang='ja'>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title><%= title %></title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<link href="/stylesheets/style.css" rel="stylesheet">
+</head>
+<body class="container">
+<header><h1 class="display-4"><%=title%></h1></header>
+<div role="main">
+   <table class="table">
+      <tr>
+         <th>BEGIN</th>
+         <%
+         var d1 = new Date(form.begin);
+         var dstr1 = d1.getFullYear() + '-' + ("0"+(d1.getMonth() + 1)).slice(-2) + '-' + ("0"+d1.getDate()).slice(-2) + "T" + ("0"+d1.getHours()).slice(-2) + ":" + ("0"+d1.getMinutes()).slice(-2);
+         %>
+         <td><%=dstr1%></td>
+      </tr>
+      <tr>
+         <th>END</th>
+         <%
+         var d2 = new Date(form.end);
+         var dstr2 = d2.getFullYear() + '-' + ("0"+(d2.getMonth() + 1)).slice(-2) + '-' + ("0"+d2.getDate()).slice(-2) + "T" + ("0"+d2.getHours()).slice(-2) + ":" + ("0"+d2.getMinutes()).slice(-2);
+         %>
+         <td><%=dstr2%></td>
+      </tr>
+      <tr>
+         <th>PLACE</th>
+         <td><%=form.place%></td>
+      </tr>
+      <tr>
+         <th>CONTENT</th>
+         <td><%=form.content%></td>
+      </tr>
+      <tr>
+         <th></th>
+         <td></td>
+      </tr>
+   </table>
+   <form method="POST" action="/sche/delete">
+      <input type="hidden" name="id" value="<%=form.id%>">
+      <input type="submit" value="削除" class="btn btn-primary">
+   </form>
+</div>
+</body>
+</html>

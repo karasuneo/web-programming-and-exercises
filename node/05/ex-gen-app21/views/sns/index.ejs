@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang='ja'>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title><%= title %></title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<link href="/stylesheets/style.css" rel="stylesheet">
+</head>
+<body class="container">
+<header><h1 class="display-4"><%=title%></h1></header>
+<div role="main">
+   <p class="h5 my-4">Hi,<span><%= login.name%></span>!<br>
+   Welcome to <%= title %>.</p>
+   <p class="my-4 h5"><%= message %></p>
+   <form method="POST" action="/add">
+      <label>コメントを投稿</label>
+      <textarea name="message" id="message"></textarea>
+      <input type="submit" value="送信" class="btn btn-primary">
+   </form>
+   <table class="table">
+      <tr>
+         <th>id</th>
+         <td>投稿者</td>
+         <td>メッセージ</td>
+         <td>投稿日時</td>
+         <td></td>
+      </tr>
+      <% for(var i in content){ %>
+         <tr>
+            <% var obj = content[i];%>
+            <th><%= obj.id%></th>
+            <td><%= obj.userName%></td>
+            <td><%= obj.message%></td>
+            <%
+            var d1 = new Date(obj.createdAt);
+            var dstr1 = d1.getFullYear() + '-' + ("0"+(d1.getMonth() + 1)).slice(-2) + '-' + ("0"+d1.getDate()).slice(-2) + " " + ("0"+d1.getHours()).slice(-2) + ":" + ("0"+d1.getMinutes()).slice(-2)+":"+("0"+d1.getSeconds()).slice(-2);
+            %>
+            <td><%= dstr1%></td>
+            <td>
+               <% if(obj.userName == login.name){ %>
+               <p><a href="/delete?id=<%=obj.id%>">削除</a></p>
+               <% } %>
+            </td>
+         </tr>
+      <% }%>
+   </table>
+</div>
+</body>
+</html>
