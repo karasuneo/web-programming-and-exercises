@@ -11,20 +11,21 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique
-  pass      String
-  mail      String?
-  age       Int      @default(0)
+  id Int @id @default(autoincrement())
+  name String @unique
+  pass String
+  mail String?
+  age Int @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  messages  Board[] //☆
+  messages Board[] //☆
 }
 
+
 model Board {
-  id        Int      @id @default(autoincrement())
-  message   String
-  account   User     @relation(fields: [accountId], references: [id])
+  id Int @id @default(autoincrement())
+  message String
+  account User @relation(fields: [accountId], references: [id])
   accountId Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

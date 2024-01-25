@@ -1,16 +1,16 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const ps = require("@prisma/client");
+const ps = require('@prisma/client');
 const prisma = new ps.PrismaClient();
 
 const pnum = 5; // ☆1ページ当たりの表示数
 
 // ログインのチェック
-function check(req, res) {
+function check(req,res) {
   if (req.session.login == null) {
-    req.session.back = "/boards";
-    res.redirect("/users/login");
+    req.session.back = '/boards';
+    res.redirect('/users/login');
     return true;
   } else {
     return false;
@@ -18,78 +18,76 @@ function check(req, res) {
 }
 
 // トップページ
-router.get("/", (req, res, next) => {
-  res.redirect("/boards/0");
+router.get('/',(req, res, next)=> {
+  res.redirect('/boards/0');
 });
 
 // トップページにページ番号をつけてアクセス
-router.get("/:page", (req, res, next) => {
-  if (check(req, res)) {
-    return;
-  }
+router.get('/:page',(req, res, next)=> {
+  if (check(req,res)){ return };
   const pg = +req.params.page;
   prisma.Board.findMany({
     skip: pg * pnum,
     take: pnum,
-    orderBy: [{ createdAt: "desc" }],
+    orderBy: [
+      {createdAt: 'desc'}
+    ],
     include: {
       account: true,
     },
-  }).then((brds) => {
+  }).then(brds => {
     var data = {
-      title: "Boards",
-      login: req.session.login,
+      title: 'Boards',
+      login:req.session.login,
       content: brds,
-      page: pg,
-    };
-    res.render("boards/index", data);
+      page:pg
+    }
+    res.render('boards/index', data);
   });
 });
 
 // メッセージフォームの送信処理
-router.post("/add", (req, res, next) => {
-  if (check(req, res)) {
-    return;
-  }
+router.post('/add',(req, res, next)=> {
+  if (check(req,res)){ return };
   prisma.Board.create({
-    data: {
+    data:{
       accountId: req.session.login.id,
-      message: req.body.msg,
-    },
+      message:req.body.msg
+    }
   })
-    .then(() => {
-      res.redirect("/boards");
-    })
-    .catch((err) => {
-      res.redirect("/boards/add");
-    });
+  .then(()=>{
+    res.redirect('/boards');
+  })
+  .catch((err)=>{
+    res.redirect('/boards/add');
+  })
 });
 
 // 利用者のホーム
-router.get("/home/:user/:id/:page", (req, res, next) => {
-  if (check(req, res)) {
-    return;
-  }
+router.get('/home/:user/:id/:page',(req, res, next)=> {
+  if (check(req,res)){ return };
   const id = +req.params.id;
   const pg = +req.params.page;
   prisma.Board.findMany({
-    where: { accountId: id },
+    where: {accountId: id},
     skip: pg * pnum,
     take: pnum,
-    orderBy: [{ createdAt: "desc" }],
+    orderBy: [
+      {createdAt: 'desc'}
+    ],
     include: {
       account: true,
     },
-  }).then((brds) => {
+  }).then(brds => {
     const data = {
-      title: "Boards",
-      login: req.session.login,
-      accountId: id,
-      userName: req.params.user,
+      title: 'Boards',
+      login:req.session.login,
+      accountId:id,
+      userName:req.params.user,
       content: brds,
-      page: pg,
-    };
-    res.render("boards/home", data);
+      page:pg
+    }
+    res.render('boards/home', data);
   });
 });
 

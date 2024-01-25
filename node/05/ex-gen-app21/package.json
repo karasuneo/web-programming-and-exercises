@@ -16,7 +16,7 @@
     "http-errors": "~1.6.3",
     "markdown-it": "^14.0.0",
     "morgan": "~1.9.1",
-    "prisma": "^5.7.1",
+    "prisma": "^5.8.0",
     "sqlite3": "^5.1.6",
     "xml2js": "^0.6.2"
   }
