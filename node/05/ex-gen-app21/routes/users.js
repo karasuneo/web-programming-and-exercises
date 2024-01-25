@@ -1,119 +1,152 @@
-var express = require('express');
-var router = express.Router();
-const db = require('../models/index');
-const {Op} = require('sequelize');
+const express = require("express");
+const router = express.Router();
 
-/* GET users listing. */
-router.get('/', (req, res, next)=>{
-  const nm = req.query.name;
-  const ml = req.query.mail;
-  db.User.findAll({
-    where:{}
-  }).then(usrs=>{
-    var data = {
-      title: 'Users/Index',
-      content: usrs
-    }
-    res.render('users/index',data);
-  });
-});
+const ps = require("@prisma/client");
+const prisma = new ps.PrismaClient();
 
-router.get('/add',(req,res,next)=>{
-  var data = {
-    title: "Users/add",
-    form: new db.User(),
-    err: null
-  };
-  res.render('users/add',data);
-});
+var lastCursor = 0;
+var cursor = 1;
 
-router.post('/add',(req,res,next)=>{
-  const form = {
-    name: req.body.name,
-    pass: req.body.pass,
-    mail: req.body.mail,
-    age: req.body.age
+prisma.$use(async (params, next) => {
+  const result = await next(params);
+  cursor = result[result.length - 1].id;
+  if (cursor == lastCursor) {
+    cursor = 1;
   }
-  db.sequelize.sync()
-    .then(()=> db.User.create(form)
-    .then(usr=>{res.redirect('/users')})
-    .catch(err=>{
-      var data = {
-        title: "Users/add",
-        form: form,
-        err: err
+  lastCursor = cursor;
+  return result;
+});
+
+router.get("/", (req, res, next) => {
+  prisma.user
+    .findMany({
+      orderBy: [{ id: "asc" }],
+      cursor: { id: cursor },
+      take: 3,
+    })
+    .then((users) => {
+      const data = {
+        title: "Users/Index",
+        content: users,
       };
-      res.render('users/add',data);
-    }));
-});
-
-router.get('/edit',(req,res,next)=>{
-  db.User.findByPk(req.query.id)
-  .then(usr=>{
-    var data = {
-      title: "Users/edit",
-      form: usr
-    };
-    res.render('users/edit',data);
-  });
-});
-
-router.post('/edit',(req,res,next)=>{
-  db.User.findByPk(req.query.id)
-    .then(usr=> {
-      usr.name = req.body.name;
-      usr.pass = req.body.pass;
-      usr.mail = req.body.mail;
-      usr.age = req.body.age;
-      usr.save().then(()=>res.redirect('/users'));
+      res.render("users/index", data);
     });
 });
 
-router.get('/delete',(req,res,next)=>{
-  db.User.findByPk(req.query.id)
-  .then(usr=>{
-    var data = {
+router.get("/add", (req, res, next) => {
+  const data = {
+    title: "Users/Add",
+  };
+  res.render("users/Add", data);
+});
+
+router.post("/add", (req, res, next) => {
+  prisma.User.create({
+    data: {
+      name: req.body.name,
+      pass: req.body.pass,
+      mail: req.body.mail,
+      age: +req.body.age,
+    },
+  }).then(() => {
+    res.redirect("/users");
+  });
+});
+
+router.get("/edit/:id", (req, res, next) => {
+  const id = req.params.id;
+  prisma.user.findUnique({ where: { id: +id } }).then((usr) => {
+    const data = {
+      title: "Users/Edit",
+      user: usr,
+    };
+    res.render("users/edit", data);
+  });
+});
+
+router.post("/edit", (req, res, next) => {
+  const { id, name, pass, mail, age } = req.body;
+  prisma.user
+    .update({
+      where: { id: +id },
+      data: {
+        name: name,
+        mail: mail,
+        pass: pass,
+        age: +age,
+      },
+    })
+    .then(() => {
+      res.redirect("/users");
+    });
+});
+
+router.get("/find", (req, res, next) => {
+  const name = req.query.name;
+  const mail = req.query.mail;
+  prisma.user
+    .findMany({
+      where: {
+        OR: [{ name: { contains: name } }, { mail: { contains: mail } }],
+      },
+    })
+    .then((usrs) => {
+      var data = {
+        title: "Users/Find",
+        content: usrs,
+      };
+      res.render("users/index", data);
+    });
+});
+
+router.get("/delete/:id", (req, res, next) => {
+  const id = req.params.id;
+  prisma.user.findUnique({ where: { id: +id } }).then((usr) => {
+    const data = {
       title: "Users/Delete",
-      form: usr
+      user: usr,
     };
-    res.render('users/delete',data);
+    res.render("users/delete", data);
   });
 });
 
-router.post('/delete',(req,res,next)=>{
-  db.User.findByPk(req.query.id)
-    .then(usr=> {
-      usr.destroy().then(()=>res.redirect('/users'));
-    });
+router.post("/delete", (req, res, next) => {
+  prisma.User.delete({
+    where: { id: +req.body.id },
+  }).then(() => {
+    res.redirect("/users");
+  });
 });
 
-router.get('/login',(req,res,next)=>{
+router.get("/login", (req, res, next) => {
   var data = {
-    title: 'Users/Login',
-    content: '名前とパスワードを入力'
-  }
-  res.render('users/login',data);
+    title: "Users/Login",
+    content: "名前とパスワードを入力下さい。",
+  };
+  res.render("users/login", data);
 });
 
-router.post('/login',(req,res,next)=>{
-  db.User.findOne({
-    where:{
-      name:req.body.name,
-      pass:req.body.pass
-    }
-  }).then(usr=> {
-      if(usr != null){
-        req.session.login = usr;
-        let back = req.session.back;
-        if(back == null)back = '/';
-        res.redirect(back);
-      }else{
-        var data = {
-          title: 'Users/Login',
-          content: '名前かパスワードに問題があります。再度入力してください'
-        }
-        res.render('users/login',data);
+router.post("/login", (req, res, next) => {
+  prisma.User.findMany({
+    where: {
+      name: req.body.name,
+      pass: req.body.pass,
+    },
+  }).then((usr) => {
+    if (usr != null && usr[0] != null) {
+      req.session.login = usr[0];
+      let back = req.session.back;
+      if (back == null) {
+        back = "/";
       }
+      res.redirect(back);
+    } else {
+      var data = {
+        title: "Users/Login",
+        content: "名前かパスワードに問題があります。再度入力下さい。",
+      };
+      res.render("users/login", data);
+    }
   });
 });
 

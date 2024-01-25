@@ -30,10 +30,13 @@ router.get("/", (req, res, next) => {
 });
 
 router.get("/find", (req, res, next) => {
-  const name = req.query.name;
+  const min = +req.query.min;
+  const max = +req.query.max;
   prisma.user
     .findMany({
-      where: { name: { contains: name } },
+      where: {
+        AND: [{ age: { gte: min } }, { age: { lte: max } }],
+      },
     })
     .then((usrs) => {
       var data = {

@@ -4,10 +4,15 @@ const router = express.Router();
 const ps = require("@prisma/client");
 const prisma = new ps.PrismaClient();
 
+const pagesize = 3; // ☆１ページ当たりのレコード数
+
 router.get("/", (req, res, next) => {
+  const page = req.query.page ? +req.query.page : 0;
   prisma.user
     .findMany({
-      orderBy: [{ name: "asc" }],
+      orderBy: [{ id: "asc" }],
+      skip: page * pagesize,
+      take: pagesize,
     })
     .then((users) => {
       const data = {
