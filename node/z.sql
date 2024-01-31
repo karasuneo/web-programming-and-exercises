@@ -1,8 +1,0 @@
-CREATE TABLE mydata (
-    id INTEGER NOT NULL UNIQUE,
-    name TEXT NOT NULL,
-    mail TEXT,
-    age INTEGER,
-    PRIMARY KEY(id AUTOINCREMENT)
-);
-
